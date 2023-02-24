@@ -16,9 +16,9 @@ const userSchema = new mongoose.Schema(
             match: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
         },
 
-        thoughts: [mongoose.ObjectId],
+        thoughts: [{ type: mongoose.Schema.Types.ObjectId, ref: "thought" }],
 
-        friends: [mongoose.ObjectId],
+        friends: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
     },
     {
         toJSON: {
