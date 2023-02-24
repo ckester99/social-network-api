@@ -48,8 +48,19 @@ router.put("/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
     try {
+        const deletedUser = await User.findOne({ _id: req.params.id });
         const deleteData = await User.deleteOne({ _id: req.params.id });
         if (deleteData.deletedCount) {
+            await Thought.deleteMany({ username: deletedUser.name });
+            const thoughtsReactedTo = await Thought.find({ "reactions.username": deletedUser.name });
+            thoughtsReactedTo.forEach((thought) => {
+                thought.reactions.forEach((reaction) => {
+                    if (reaction.username == deletedUser.name) {
+                        reaction.remove();
+                    }
+                });
+                thought.save();
+            });
             res.send(`Userid: ${req.params.id} deleted successfully`);
         } else {
             throw new Error("User not found!");
