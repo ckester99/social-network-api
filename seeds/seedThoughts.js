@@ -6,6 +6,7 @@ async function seedThoughts() {
 
     await Thought.create([
         {
+            _id: mongoose.Types.ObjectId("63f8aded6fd569afa5f0c033"),
             thoughtText: "I love learning new js frameworks!",
             createdAt: new Date("2023-01-17T12:24:05"),
             username: "Bobby Lee",
@@ -23,6 +24,7 @@ async function seedThoughts() {
             ],
         },
         {
+            _id: mongoose.Types.ObjectId("63f8aded6fd569afa5f0c036"),
             thoughtText: "I recently started using tailwindCSS!",
             createdAt: new Date("2023-01-15T14:12:03"),
             username: "Robert Smith",
@@ -35,6 +37,7 @@ async function seedThoughts() {
             ],
         },
         {
+            _id: mongoose.Types.ObjectId("63f8aded6fd569afa5f0c038"),
             thoughtText: "noSQL databases are very cool!",
             createdAt: new Date("2023-01-24T17:13:05"),
             username: "Robert Smith",
@@ -52,6 +55,7 @@ async function seedThoughts() {
             ],
         },
         {
+            _id: mongoose.mongoose.Types.ObjectId("63f8aded6fd569afa5f0c03b"),
             thoughtText: "Svelte might be my favorite front end framework right now",
             createdAt: new Date("2023-02-11T11:47:56"),
             username: "Cindy Kim",
