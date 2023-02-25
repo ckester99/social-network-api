@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const { default: mongoose } = require("mongoose");
 const { User, Thought } = require("../models");
 const { findOneAndUpdate } = require("../models/User");
 
@@ -68,6 +69,36 @@ router.delete("/:id", async (req, res) => {
     } catch (err) {
         console.log(err);
         res.status(400).json({ message: err.message });
+    }
+});
+
+router.post("/:id/friends/:friendId", async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+        const friend = await User.findById(req.params.friendId);
+        if (!(user && friend)) {
+            console.log("here");
+            throw new Error("User not found!");
+        }
+
+        user.friends.push(req.params.friendId);
+        user.save();
+        friend.friends.push(req.params.id);
+        friend.save();
+        res.send("Friend added successfully!");
+    } catch (err) {
+        res.status(400).json(err);
+    }
+});
+
+router.delete("/:id/friends/:friendId", async (req, res) => {
+    try {
+        await User.updateMany({}, { $pull: { friends: req.params.id } });
+        await User.updateMany({}, { $pull: { friends: req.params.friendId } });
+
+        res.send("Friend removed successfully!");
+    } catch (err) {
+        res.status(400).json(err);
     }
 });
 
