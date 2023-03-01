@@ -37,6 +37,15 @@ router.put("/:id", async (req, res) => {
     }
 });
 
+router.delete("/:id", async (req, res) => {
+    try {
+        const deletedThought = await Thought.findByIdAndDelete(req.params.id);
+        res.send(`Thought ${deletedThought._id} deleted!`);
+    } catch (err) {
+        res.status(400).json(err);
+    }
+});
+
 router.post("/:id/reactions", async (req, res) => {
     try {
         const thoughtData = await Thought.findById(req.params.id);
@@ -57,7 +66,7 @@ router.delete("/:id/reactions", async (req, res) => {
             }
         });
         thoughtData.save();
-        res.send("Thought removed successfully!");
+        res.send("Reaction removed successfully!");
     } catch (err) {
         res.status(400).json(err);
     }
